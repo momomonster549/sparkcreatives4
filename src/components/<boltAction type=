@@ -1,0 +1,105 @@
+import React from 'react';
+import { Star, Quote } from 'lucide-react';
+import { Card, CardContent } from '../ui/Card';
+
+interface TestimonialCardProps {
+  quote: string;
+  author: string;
+  role: string;
+  image: string;
+  rating: number;
+}
+
+const TestimonialCard: React.FC<TestimonialCardProps> = ({ quote, author, role, image, rating }) => {
+  return (
+    <Card className="border-none shadow-lg hover:shadow-xl transition-all duration-300 card-hover overflow-hidden h-full">
+      <CardContent className="p-6 flex flex-col h-full">
+        <div className="mb-4 flex">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Star 
+              key={i} 
+              className={`h-5 w-5 ${i < rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} 
+            />
+          ))}
+        </div>
+        
+        <div className="relative mb-6 flex-grow">
+          <Quote className="absolute -top-2 -left-2 h-8 w-8 text-brand-teal/20" />
+          <p className="text-gray-600 relative z-10">{quote}</p>
+        </div>
+        
+        <div className="flex items-center mt-auto">
+          <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
+            <img src={image} alt={author} className="w-full h-full object-cover" />
+          </div>
+          <div>
+            <p className="font-semibold">{author}</p>
+            <p className="text-sm text-gray-500">{role}</p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+const TestimonialsSection: React.FC = () => {
+  const testimonials = [
+    {
+      quote: "Donating through SparkCreatives was incredibly easy. I love knowing that my clothes are going directly to people who need them, and the team kept me updated throughout the process.",
+      author: "Maria Santos",
+      role: "Regular Donor",
+      image: "https://randomuser.me/api/portraits/women/45.jpg",
+      rating: 5
+    },
+    {
+      quote: "As a community leader in Tacloban, I've seen firsthand how these clothing donations restore dignity and hope to families who lost everything in natural disasters.",
+      author: "Juan Reyes",
+      role: "Community Partner",
+      image: "https://randomuser.me/api/portraits/men/32.jpg",
+      rating: 5
+    },
+    {
+      quote: "The quality of clothes we received for our children was amazing. These aren't just hand-me-downs, but items given with care and thoughtfulness.",
+      author: "Elena Domingo",
+      role: "Donation Recipient",
+      image: "https://randomuser.me/api/portraits/women/68.jpg",
+      rating: 5
+    }
+  ];
+
+  return (
+    <section className="py-20 relative overflow-hidden">
+      {/* Decorative Elements */}
+      <div className="absolute top-0 right-1/4 w-64 h-64 bg-brand-orange/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-brand-teal/5 rounded-full blur-3xl"></div>
+      
+      <div className="container mx-auto px-4">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="inline-block mb-4">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-brand-orange/10 text-brand-orange">
+              Testimonials
+            </span>
+          </div>
+          
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Voices of <span className="text-gradient bg-gradient-to-r from-brand-orange to-brand-teal">Impact & Gratitude</span>
+          </h2>
+          
+          <p className="text-gray-600 text-lg">
+            Hear from our donors, partners, and recipients about the difference we're making together.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {testimonials.map((testimonial, index) => (
+            <div key={index} className="animate-slide-up" style={{ animationDelay: `${0.1 * (index + 1)}s` }}>
+              <TestimonialCard {...testimonial} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default TestimonialsSection;
